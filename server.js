@@ -1,6 +1,18 @@
-var http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
-}).listen(3000, '127.0.0.1');
-console.log('Server running at http://127.0.0.1:3000/');
+var express = require('express'),
+    articles = require('./routes/articles');
+ 
+var app = express();
+ 
+app.configure(function () {
+    app.use(express.logger('dev'));     /* 'default', 'short', 'tiny', 'dev' */
+    app.use(express.bodyParser());
+});
+ 
+app.get('/articles', articles.findAll);
+app.get('/articles/:id', articles.findById);
+app.post('/articles', articles.addArticle);
+app.put('/articles/:id', articles.updateArticle);
+app.delete('/articles/:id', articles.deleteArticle);
+ 
+app.listen(3000);
+console.log('Fapping on your image and listening on port 3000...');
