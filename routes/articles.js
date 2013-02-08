@@ -9,10 +9,8 @@ db = new Db('articledb', server);
 
 db.open(function(err, db) {
     if(!err) {
-        console.log("Connected to 'articledb' database");
         db.collection('articles', {safe:true}, function(err, collection) {
             if (err) {
-                console.log("The 'articles' collection doesn't exist. Creating it with sample data...");
                 populateDB();
             }
         });
@@ -21,7 +19,6 @@ db.open(function(err, db) {
 
 exports.findById = function(req, res) {
     var id = req.params.id;
-    console.log('Retrieving article: ' + id);
     db.collection('articles', function(err, collection) {
         collection.findOne({'_id':new BSON.ObjectID(id)}, function(err, item) {
             res.send(item);
@@ -39,13 +36,11 @@ exports.findAll = function(req, res) {
 
 exports.addArticle = function(req, res) {
     var article = req.body;
-    console.log('Adding article: ' + JSON.stringify(article));
     db.collection('articles', function(err, collection) {
         collection.insert(article, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'error':'An error has occurred'});
             } else {
-                console.log('Success: ' + JSON.stringify(result[0]));
                 res.send(result[0]);
             }
         });
@@ -55,15 +50,11 @@ exports.addArticle = function(req, res) {
 exports.updateArticle = function(req, res) {
     var id = req.params.id;
     var article = req.body;
-    console.log('Updating article: ' + id);
-    console.log(JSON.stringify(article));
     db.collection('articles', function(err, collection) {
         collection.update({'_id':new BSON.ObjectID(id)}, article, {safe:true}, function(err, result) {
             if (err) {
-                console.log('Error updating article: ' + err);
                 res.send({'error':'An error has occurred'});
             } else {
-                console.log('' + result + ' document(s) updated');
                 res.send(article);
             }
         });
@@ -72,13 +63,11 @@ exports.updateArticle = function(req, res) {
 
 exports.deleteArticle = function(req, res) {
     var id = req.params.id;
-    console.log('Deleting article: ' + id);
     db.collection('articles', function(err, collection) {
         collection.remove({'_id':new BSON.ObjectID(id)}, {safe:true}, function(err, result) {
             if (err) {
                 res.send({'error':'An error has occurred - ' + err});
             } else {
-                console.log('' + result + ' document(s) deleted');
                 res.send(req.body);
             }
         });

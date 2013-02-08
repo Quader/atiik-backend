@@ -1,7 +1,7 @@
 {
-    "name": "wine-cellar",
-    "description": "Wine Cellar Application",
-    "version": "0.0.1",
+    "name": "atiik-backend",
+    "description": "Atiik Backend Server Application for retrieving Articles and edit them (update, delete)",
+    "version": "0.0.2",
     "private": true,
     "dependencies": {
         "express": "3.x"
