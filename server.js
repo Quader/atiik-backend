@@ -1,10 +1,10 @@
 var express = require('express'),
     articles = require('./routes/articles');
- 
+    
 var app = express();
  
 app.configure(function () {
-    app.use(express.logger('tiny'));     /* 'default', 'short', 'tiny', 'dev' */
+    app.use(express.logger('dev'));     /* 'default', 'short', 'tiny', 'dev' */
     app.use(express.bodyParser());
 });
  
